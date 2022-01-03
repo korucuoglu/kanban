@@ -1,12 +1,21 @@
 <template>
-  <div class="item">
-    <p class="title">Selam</p>
-    <p class="content">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo cupiditate
-      voluptas quis. Recusandae, corporis quia?
-    </p>
+  <div class="item" v-for="tabItem in props.tabItems">
+    <p class="title">{{ tabItem.title }}</p>
+    <p class="content">{{ tabItem.content }}</p>
   </div>
 </template>
+<script setup>
+import { defineProps } from "vue";
+
+const props = defineProps({
+  tabItems: {
+    required: true,
+    type: Array,
+  },
+});
+
+console.log(props);
+</script>
 
 <style scoped lang="scss">
 .item {

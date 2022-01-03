@@ -1,17 +1,24 @@
 <template>
-  <div class="tab">
+  <div class="tab" v-for="tab in tabs" :key="tab.id">
     <div class="tab-content">
-      <h2 class="title">Backlog</h2>
+      <h2 class="title">{{ tab.title }}</h2>
       <div class="items">
-        <TabItem v-for="i in 4" />
+        <Item :tabItems="tab.items" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup >
-import TabItem from "./TabItem.vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+
+import Item from "./Item.vue";
+const store = useStore();
+
+const tabs = computed(() => store.getters._getTabs);
 </script>
+
 <style scoped lang="scss">
 $tab-background: #262626;
 .tab {
