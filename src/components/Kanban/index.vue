@@ -1,9 +1,18 @@
 <template>
-  <p>Board</p>
+  <div
+    style="
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    "
+  >
+    <Tab />
+  </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import Tab from "./Tab.vue";
 </script>
 
 <style>
