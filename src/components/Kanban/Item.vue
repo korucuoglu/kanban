@@ -1,20 +1,29 @@
 <template>
-  <div class="item" v-for="tabItem in props.tabItems">
-    <p class="title">{{ tabItem.title }}</p>
-    <p class="content">{{ tabItem.content }}</p>
-  </div>
+  <draggable
+    v-model="props.tabItems.items"
+    group="item"
+    @start="drag = true"
+    @end="drag = false"
+    item-key="id"
+  >
+    <template #item="{ element }">
+      <div class="item">
+        <p class="title">{{ element.title }}</p>
+        <p class="content">{{ element.content }}</p>
+      </div>
+    </template>
+  </draggable>
 </template>
 <script setup>
 import { defineProps } from "vue";
+import draggable from "vuedraggable";
 
 const props = defineProps({
   tabItems: {
     required: true,
-    type: Array,
+    type: Object,
   },
 });
-
-console.log(props);
 </script>
 
 <style scoped lang="scss">
