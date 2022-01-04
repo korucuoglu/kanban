@@ -11,6 +11,11 @@ const store = createStore({
       return state.tabs;
     },
   },
+  mutations: {
+    updateList(state, payload) {
+      state.tabs = payload;
+    },
+  },
 });
 
 export default store;
