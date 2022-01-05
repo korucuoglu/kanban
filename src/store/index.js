@@ -1,6 +1,6 @@
-import {createStore} from "vuex";
+import {createStore} from 'vuex';
 
-import tabs from "../tabs.js";
+import tabs from '../tabs.js';
 
 const store = createStore({
   state: {
@@ -14,6 +14,7 @@ const store = createStore({
   mutations: {
     updateList(state, payload) {
       state.tabs = payload;
+      console.log(payload);
     },
   },
 });

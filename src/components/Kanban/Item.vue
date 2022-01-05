@@ -7,9 +7,11 @@
     item-key="id"
   >
     <template #item="{ element }">
-      <div class="item">
+      <div class="item" :style="{ backgroundColor: element.color }">
         <p class="title">{{ element.title }}</p>
-        <p class="content">{{ element.content }}</p>
+        <p class="content" v-if="element.content">
+          {{ element.content }}
+        </p>
       </div>
     </template>
   </draggable>
@@ -33,6 +35,7 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   border-radius: 8px;
+  cursor: grabbing;
   &:not(:last-child) {
     margin-bottom: 16px;
   }

@@ -11,7 +11,14 @@
       <template #item="{ element }">
         <div class="tab-cover">
           <div class="tab-content">
-            <h2 class="title">{{ element.title }}</h2>
+            <div class="title">
+              <input
+                type="text"
+                :value="element.title"
+                @blur="tabTitleChange($event, element)"
+                :name="element.title"
+              />
+            </div>
             <div class="items">
               <Item :tabItems="element" />
             </div>
@@ -37,11 +44,14 @@ const tabs = computed({
   },
   set(val) {
     store.commit("updateList", val);
+    console.log(val);
   },
 });
 
-const changeTabItems = ($event) => {
-  console.log($event.id);
+const tabTitleChange = (event, element) => {
+  setTimeout(() => {
+    element.title = event.target.value;
+  }, 2000);
 };
 </script>
 
@@ -56,7 +66,12 @@ $tab-background: #262626;
 
     .tab-cover {
       padding: 0 12px;
-      min-width: calc(25% - 24px);
+      /* width: calc(25% - 24px); */
+      cursor: grabbing;
+      .title-board {
+        font-size: 50px;
+        color: #fff;
+      }
 
       .tab-content {
         background-color: $tab-background;
@@ -65,10 +80,21 @@ $tab-background: #262626;
         border-radius: 16px;
         display: flex;
         flex-direction: column;
+        width: 368px;
         .title {
-          font-size: 37px;
-          font-weight: 600;
           margin-bottom: 24px;
+
+          input {
+            border: none;
+            background-color: transparent;
+            outline: none;
+            color: #fff;
+            font-size: 37px;
+            font-weight: 600;
+            overflow: hidden;
+            max-width: 100%;
+            text-overflow: ellipsis;
+          }
         }
         .items {
           display: flex;

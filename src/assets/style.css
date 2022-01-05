@@ -1,25 +1,25 @@
 @font-face {
-  font-family: "SF Pro";
+  font-family: 'SF Pro';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("./fonts/sf-pro/sf-pro-regular.woff2") format("woff2");
+  src: url('./fonts/sf-pro/sf-pro-regular.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "SF Pro";
+  font-family: 'SF Pro';
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("./fonts/sf-pro/sf-pro-semibold.woff2") format("woff2");
+  src: url('./fonts/sf-pro/sf-pro-semibold.woff2') format('woff2');
 }
 
 @font-face {
-  font-family: "SF Pro";
+  font-family: 'SF Pro';
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("./fonts/sf-pro/sf-pro-bold.woff2") format("woff2");
+  src: url('./fonts/sf-pro/sf-pro-bold.woff2') format('woff2');
 }
 
 *,
@@ -31,8 +31,9 @@
 }
 
 body {
-  font-family: "SF Pro", sans-serif;
+  font-family: 'SF Pro', sans-serif;
   font-weight: 400;
+  background-color: #000;
 }
 
 a {
