@@ -16,7 +16,6 @@
                 type="text"
                 :value="element.title"
                 @blur="tabTitleChange($event, element)"
-                :name="element.title"
               />
             </div>
             <div class="items">
@@ -44,14 +43,13 @@ const tabs = computed({
   },
   set(val) {
     store.commit("updateList", val);
-    console.log(val);
   },
 });
 
 const tabTitleChange = (event, element) => {
   setTimeout(() => {
     element.title = event.target.value;
-  }, 2000);
+  }, 1000);
 };
 </script>
 

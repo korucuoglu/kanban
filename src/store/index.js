@@ -1,4 +1,5 @@
 import {createStore} from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 
 import tabs from '../tabs.js';
 
@@ -14,9 +15,12 @@ const store = createStore({
   mutations: {
     updateList(state, payload) {
       state.tabs = payload;
-      console.log(payload);
+    },
+    updateItems(state) {
+      state.tabs = state.tabs;
     },
   },
+  plugins: [createPersistedState()],
 });
 
 export default store;

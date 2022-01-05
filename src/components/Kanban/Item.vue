@@ -17,14 +17,21 @@
   </draggable>
 </template>
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, watch } from "vue";
 import draggable from "vuedraggable";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const props = defineProps({
   tabItems: {
     required: true,
     type: Object,
   },
+});
+
+watch(props.tabItems, () => {
+  store.commit("updateItems", props.tabItems);
 });
 </script>
 
