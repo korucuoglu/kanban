@@ -19,6 +19,16 @@ const store = createStore({
     updateItems(state) {
       state.tabs = state.tabs;
     },
+    addTask(state, payload) {
+      // const element = state.tabs.filter((tab) => {
+      //   return Object.keys(tab).some((element) => {
+      //     return tab[element] == 'Backlog';
+      //     // Ilk tab her zaman Backlog olacaksa burasi kullanilabilir ancak tablarin da yeri degisebilecegi icin her zaman ilk siraya eklenmeli.
+      //   });
+      // });
+
+      state.tabs[0].items.push(payload);
+    },
   },
   plugins: [createPersistedState()],
 });

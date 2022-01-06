@@ -31,11 +31,35 @@
 }
 
 body {
+  background-color: #000;
+}
+
+body,
+input,
+textarea {
   font-family: 'SF Pro', sans-serif;
   font-weight: 400;
-  background-color: #000;
 }
 
 a {
   text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #307fe2;
+  border: none;
+  outline: none;
+  color: #fff;
+  display: inline-block;
+  padding: 8px 13px;
+  width: max-content;
+  cursor: pointer;
+  border-radius: 5px;
+  position: relative;
+  line-height: 1;
+  transition: 0.3s all;
+}
+
+.btn-primary:hover {
+  background-color: #0770f1;
 }
