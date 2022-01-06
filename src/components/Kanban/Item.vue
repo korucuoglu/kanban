@@ -7,7 +7,11 @@
     item-key="id"
   >
     <template #item="{ element }">
-      <div class="item" :style="{ backgroundColor: element.color }">
+      <div
+        class="item"
+        :style="{ backgroundColor: element.color }"
+        @click="getTask(element, props.tabId)"
+      >
         <p class="title">{{ element.title }}</p>
         <p class="content" v-if="element.content">
           {{ element.content }}
@@ -28,11 +32,19 @@ const props = defineProps({
     required: true,
     type: Object,
   },
+  tabId: {
+    required: true,
+    type: Number,
+  },
 });
 
 watch(props.tabItems, () => {
   store.commit("updateItems", props.tabItems);
 });
+
+const getTask = (element, tabId) => {
+  store.commit("setCurrentTask", [element, tabId]);
+};
 </script>
 
 <style scoped lang="scss">

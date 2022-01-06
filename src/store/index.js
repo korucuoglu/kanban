@@ -6,10 +6,14 @@ import tabs from '../tabs.js';
 const store = createStore({
   state: {
     tabs,
+    currentTask: null,
   },
   getters: {
     _getTabs(state) {
       return state.tabs;
+    },
+    _getCurrentTask(state) {
+      return state.currentTask;
     },
   },
   mutations: {
@@ -28,6 +32,14 @@ const store = createStore({
       // });
 
       state.tabs[0].items.push(payload);
+    },
+    setCurrentTask(state, payload) {
+      state.currentTask = payload;
+    },
+    updateTask(state, payload) {
+      // console.log(state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0]);
+      // console.log(payload[0]);
+      // TODO: Su anda guncellenmiyor. payload[0]'a esitlenmeli
     },
   },
   plugins: [createPersistedState()],

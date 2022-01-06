@@ -14,19 +14,21 @@
 
       <textarea class="content" v-model="state.taskContent" />
       <div class="btn-con">
-        <a class="btn-primary" @click="addTask">Add</a>
+        <a class="btn-primary" v-if="!getCurrentTask" @click="addTask">Add</a>
+        <a class="btn-primary" v-else @click="updateTask">Update</a>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, defineEmits } from "vue";
+import { reactive, defineEmits, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
 
 const state = reactive({
+  id: new Date().getTime(),
   taskTitle: "Task Title",
   taskContent: "Task content...",
   taskColor: "#C340A1",
@@ -39,16 +41,37 @@ const closeBtnTask = () => {
   emit("closeBtnTask", false);
 };
 
-const addTask = () => {
-  store.commit("addTask", {
-    id: new Date().getTime(),
+const taskInfo = computed(() => {
+  return {
+    id: state.id,
     title: state.taskTitle,
     color: state.taskColor,
     content: state.taskContent,
-  });
+  };
+});
+
+const getCurrentTask = computed(() => {
+  return store.getters._getCurrentTask;
+  // Get Currentte hem tabId hem de objenin kendisi tutuldugu icin dizinin 1. elemani olan objeyi direkt aldik. Dizinin ikinci elemani tabId.
+});
+
+const addTask = () => {
+  store.commit("addTask", taskInfo.value);
 
   closeBtnTask();
 };
+
+const updateTask = () => {
+  store.commit("updateTask", [taskInfo.value, getCurrentTask.value[1]]);
+  store.commit("setCurrentTask", null);
+};
+
+if (getCurrentTask.value != null) {
+  state.id = getCurrentTask.value[0].id;
+  state.taskTitle = getCurrentTask.value[0].title;
+  state.taskContent = getCurrentTask.value[0].content;
+  state.taskColor = getCurrentTask.value[0].color;
+}
 </script>
 
 <style scoped lang="scss">

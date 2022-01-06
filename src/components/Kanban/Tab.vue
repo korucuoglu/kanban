@@ -19,7 +19,7 @@
               />
             </div>
             <div class="items">
-              <Item :tabItems="element" />
+              <Item :tabItems="element" :tabId="element.id" />
             </div>
           </div>
         </div>
