@@ -21,7 +21,7 @@
   </draggable>
 </template>
 <script setup>
-import { defineProps, watch } from "vue";
+import { watch } from "vue";
 import draggable from "vuedraggable";
 import { useStore } from "vuex";
 

@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { reactive, defineEmits, computed } from "vue";
+import { reactive, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();

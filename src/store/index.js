@@ -37,9 +37,16 @@ const store = createStore({
       state.currentTask = payload;
     },
     updateTask(state, payload) {
-      // console.log(state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0]);
-      // console.log(payload[0]);
-      // TODO: Su anda guncellenmiyor. payload[0]'a esitlenmeli
+      let tabItem = state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0];
+      payload = payload[0];
+
+      tabItem.id = payload.id;
+      tabItem.title = payload.title;
+      tabItem.color = payload.color;
+      tabItem.content = payload.content;
+      console.log(tabItem, payload);
+
+      // Burada direkt olarak state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0] = payload[0] islemini calistiramadigim icin boyle cozum buldum.
     },
   },
   plugins: [createPersistedState()],
