@@ -15,7 +15,10 @@
       <textarea class="content" v-model="state.taskContent" />
       <div class="btn-con">
         <a class="btn-primary" v-if="!getCurrentTask" @click="addTask">Add</a>
-        <a class="btn-primary" v-else @click="updateTask">Update</a>
+        <div v-else>
+          <a class="btn-primary danger" @click="deleteTask">Delete</a>
+          <a class="btn-primary" @click="updateTask">Update</a>
+        </div>
       </div>
     </div>
   </div>
@@ -63,6 +66,11 @@ const addTask = () => {
 
 const updateTask = () => {
   store.commit("updateTask", [taskInfo.value, getCurrentTask.value[1]]);
+  store.commit("setCurrentTask", null);
+};
+
+const deleteTask = () => {
+  store.commit("deleteTask", [taskInfo.value, getCurrentTask.value[1]]);
   store.commit("setCurrentTask", null);
 };
 
@@ -175,6 +183,10 @@ if (getCurrentTask.value != null) {
     .btn-con {
       display: flex;
       justify-content: flex-end;
+
+      .btn-primary.danger {
+        margin-right: 1rem;
+      }
     }
   }
 }

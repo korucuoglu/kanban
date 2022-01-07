@@ -48,6 +48,19 @@ const store = createStore({
 
       // Burada direkt olarak state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0] = payload[0] islemini calistiramadigim icin boyle cozum buldum.
     },
+
+    deleteTask(state, payload) {
+      const tabItem = state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0];
+      // Secilen task'i tabItem'a esitliyoruz.
+
+      const index = state.tabs.filter((tab) => tab.id == payload[1])[0].items.indexOf(tabItem);
+      // Secilen task'in tabs altindaki tabItems'in kacinci objesi oldugunu index'e esitliyoruz.
+
+      const items = [state.tabs.filter((tab) => tab.id == payload[1])[0].items];
+      // Hangi tab secildi ise o tab'in altindaki itemList'ini items'a esitliyoruz.
+
+      items[0].splice(index, 1);
+    },
   },
   plugins: [createPersistedState()],
 });

@@ -63,3 +63,11 @@ a {
 .btn-primary:hover {
   background-color: #0770f1;
 }
+
+.btn-primary.danger {
+  background-color: #e23056;
+}
+
+.btn-primary.danger:hover {
+  background-color: #ca1b41;
+}
