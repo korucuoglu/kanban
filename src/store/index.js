@@ -44,22 +44,23 @@ const store = createStore({
       tabItem.title = payload.title;
       tabItem.color = payload.color;
       tabItem.content = payload.content;
-      console.log(tabItem, payload);
 
       // Burada direkt olarak state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0] = payload[0] islemini calistiramadigim icin boyle cozum buldum.
     },
 
     deleteTask(state, payload) {
-      const tabItem = state.tabs.filter((tab) => tab.id == payload[1])[0].items.filter((item) => item.id == payload[0].id)[0];
-      // Secilen task'i tabItem'a esitliyoruz.
+      const itemsOfSelectedTab = state.tabs.filter((tab) => tab.id == payload[1])[0].items;
+      // Silinmesi icin secilen objenin bulundugu listeyi buluyor.
+      // payload[0] elemani bize secilen objeyi direkt olarak veriyor.
+      // payload[1] elemani bize tabId verisini veriyor. Bunlari delete tusuna basildigi anda aliyoruz.
 
-      const index = state.tabs.filter((tab) => tab.id == payload[1])[0].items.indexOf(tabItem);
-      // Secilen task'in tabs altindaki tabItems'in kacinci objesi oldugunu index'e esitliyoruz.
+      const tabItem = itemsOfSelectedTab.filter((item) => item.id == payload[0].id)[0];
+      // Secilen objenin tab icindeki items listesindeki esitlenen objeyi(task'i) buluyor. Bununla tabin icindeki item listesinin icindeki hangi obje ile eslestigini buluyoruz.
 
-      const items = [state.tabs.filter((tab) => tab.id == payload[1])[0].items];
-      // Hangi tab secildi ise o tab'in altindaki itemList'ini items'a esitliyoruz.
+      const index = itemsOfSelectedTab.indexOf(tabItem);
+      // Objenin itemsOfSelectedTab icindeki sira numarasini buluyor.
 
-      items[0].splice(index, 1);
+      itemsOfSelectedTab.splice(index, 1);
     },
   },
   plugins: [createPersistedState()],
