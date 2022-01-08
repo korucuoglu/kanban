@@ -46,13 +46,15 @@ const getCurrentTask = computed(() => {
   width: 100%;
   height: 100%;
   .add-task-btn {
-    margin-bottom: 4rem;
-
     span {
       line-height: 1;
       vertical-align: text-top;
       margin-right: 3px;
     }
+  }
+
+  @media screen and (max-width: 576px) {
+    padding: 50px 0 50px 0;
   }
 }
 </style>

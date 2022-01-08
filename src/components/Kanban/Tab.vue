@@ -57,15 +57,22 @@ const tabTitleChange = (event, element) => {
 $tab-background: #262626;
 .tab {
   width: 100%;
+  overflow-x: auto;
+  padding-top: 4rem;
+  max-width: max-content;
 
   .tab-items {
     display: flex;
     justify-content: center;
-
+    align-items: flex-start;
     .tab-cover {
       padding: 0 12px;
-      /* width: calc(25% - 24px); */
-      cursor: grabbing;
+      width: calc(25% - 24px);
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
       .title-board {
         font-size: 50px;
         color: #fff;
@@ -78,7 +85,10 @@ $tab-background: #262626;
         border-radius: 16px;
         display: flex;
         flex-direction: column;
-        width: 368px;
+        width: 100%;
+        max-width: 368px;
+        pointer-events: all;
+        cursor: grabbing;
         .title {
           margin-bottom: 24px;
 
@@ -97,6 +107,83 @@ $tab-background: #262626;
         .items {
           display: flex;
           flex-direction: column;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1300px) {
+    width: 100%;
+    padding: 5rem;
+
+    .tab-items {
+      .tab-cover {
+        width: calc(25% - 24px);
+        .tab-content {
+          width: 100%;
+          max-width: 370px;
+          padding: 18px;
+
+          .title {
+            margin-bottom: 25px;
+
+            input {
+              font-size: 34px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    width: 100%;
+    padding: 4rem;
+
+    .tab-items {
+      justify-content: flex-start;
+      .tab-cover {
+        min-width: 320px;
+
+        .tab-content {
+          width: 100%;
+          max-width: 370px;
+          padding: 18px;
+
+          .title {
+            margin-bottom: 16px;
+
+            input {
+              font-size: 28px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    width: 100%;
+    padding: 4rem 1rem;
+
+    .tab-items {
+      justify-content: flex-start;
+      .tab-cover {
+        min-width: 250px;
+
+        .tab-content {
+          width: 100%;
+          max-width: 370px;
+          pointer-events: all;
+          padding: 18px;
+
+          .title {
+            margin-bottom: 16px;
+
+            input {
+              font-size: 28px;
+            }
+          }
         }
       }
     }

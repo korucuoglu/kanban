@@ -174,6 +174,7 @@ if (getCurrentTask.value != null) {
     .content {
       resize: none;
       height: 300px;
+      max-height: 20vh;
       width: 100%;
       font-weight: 400;
       font-size: 18px;
@@ -186,6 +187,25 @@ if (getCurrentTask.value != null) {
 
       .btn-primary.danger {
         margin-right: 1rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    overflow-y: auto;
+    .in {
+      top: 15vh;
+      margin-bottom: 4rem;
+      overflow-y: auto;
+      width: 90%;
+      .top {
+        .title {
+          font-size: 23px;
+        }
+      }
+
+      .content {
+        font-size: 14px;
       }
     }
   }

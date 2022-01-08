@@ -130,5 +130,12 @@ const getTask = (element, tabId) => {
     font-size: 14px;
     opacity: 0.7;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 15px;
+    .top .btn-set {
+      visibility: visible;
+    }
+  }
 }
 </style>
