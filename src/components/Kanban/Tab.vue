@@ -9,7 +9,7 @@
       class="tab-items"
     >
       <template #item="{ element }">
-        <div class="tab-cover">
+        <div class="tab-cover" :data-tab-id="element._id">
           <div class="tab-content">
             <div class="title">
               <input
@@ -19,7 +19,7 @@
               />
             </div>
             <div class="items">
-              <Item :tabItems="element" :tabId="element.id" />
+              <Item :tabItems="element" :tabId="element._id" />
             </div>
           </div>
         </div>
@@ -42,13 +42,17 @@ const tabs = computed({
     return store.getters._getTabs;
   },
   set(val) {
-    store.commit("updateList", val);
+    // Update tabs order in MongoDB when drag and drop occurs
+    store.dispatch("updateTabsOrder", val);
   },
 });
 
 const tabTitleChange = (event, element) => {
   setTimeout(() => {
-    element.title = event.target.value;
+    store.dispatch("updateTabTitle", {
+      tabId: element._id,
+      title: event.target.value,
+    });
   }, 1000);
 };
 </script>

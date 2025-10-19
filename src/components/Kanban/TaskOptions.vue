@@ -12,6 +12,15 @@
         </label>
       </div>
 
+      <div class="task-tab" v-if="getCurrentTask">
+        <label for="task-tab">Move to Tab:</label>
+        <select v-model="state.selectedTabId" id="task-tab">
+          <option v-for="tab in tabs" :key="tab._id" :value="tab._id">
+            {{ tab.title }}
+          </option>
+        </select>
+      </div>
+
       <textarea class="content" v-model="state.taskContent" />
       <div class="btn-con">
         <a class="btn-primary" v-if="!getCurrentTask" @click="addTask">Add</a>
@@ -35,6 +44,7 @@ const state = reactive({
   taskTitle: "Task Title",
   taskContent: "Task content...",
   taskColor: "#C340A1",
+  selectedTabId: "",
 });
 
 const emit = defineEmits(["closeBtnTask"]);
@@ -58,24 +68,52 @@ const getCurrentTask = computed(() => {
   // Get Currentte hem tabId hem de objenin kendisi tutuldugu icin dizinin 1. elemani olan objeyi direkt aldik. Dizinin ikinci elemani tabId.
 });
 
+const tabs = computed(() => {
+  return store.getters._getTabs;
+});
+
 const addTask = () => {
-  store.commit("addTask", taskInfo.value);
+  store.dispatch("addTask", {
+    title: state.taskTitle,
+    color: state.taskColor,
+    content: state.taskContent,
+  });
 
   closeBtnTask();
 };
 
 const updateTask = () => {
-  store.commit("updateTask", [taskInfo.value, getCurrentTask.value[1]]);
+  // Update task data with current form values
+  const updatedTask = {
+    ...getCurrentTask.value[0],
+    title: state.taskTitle,
+    color: state.taskColor,
+    content: state.taskContent,
+  };
+  
+  // Check if task should be moved to a different tab
+  if (state.selectedTabId && state.selectedTabId !== getCurrentTask.value[1]) {
+    // Move task to different tab
+    store.dispatch('moveTaskBetweenTabs', {
+      fromTabId: getCurrentTask.value[1],
+      toTabId: state.selectedTabId,
+      taskId: updatedTask._id
+    });
+  } else {
+    // Just update task in current tab
+    store.dispatch("updateTask", [updatedTask, getCurrentTask.value[1]]);
+  }
+  
   store.commit("setCurrentTask", null);
 };
 
 const deleteTask = () => {
-  store.commit("deleteTask", [taskInfo.value, getCurrentTask.value[1]]);
+  store.dispatch("deleteTask", [getCurrentTask.value[0], getCurrentTask.value[1]]);
   store.commit("setCurrentTask", null);
 };
 
 if (getCurrentTask.value != null) {
-  state.id = getCurrentTask.value[0].id;
+  state.id = getCurrentTask.value[0]._id || getCurrentTask.value[0].id;
   state.taskTitle = getCurrentTask.value[0].title;
   state.taskContent = getCurrentTask.value[0].content;
   state.taskColor = getCurrentTask.value[0].color;
@@ -168,6 +206,25 @@ if (getCurrentTask.value != null) {
         input {
           margin-left: 1rem;
         }
+      }
+    }
+
+    .task-tab {
+      color: #fff;
+      margin-top: 1rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      select {
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #555;
+        padding: 0.5rem;
+        border-radius: 4px;
+        width: 100%;
       }
     }
 
