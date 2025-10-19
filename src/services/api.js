@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001/api'; // Backend API URL'i
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? '/api'  // Production'da relative path kullan
+  : 'http://localhost:3001/api'; // Development için localhost
 
 const api = axios.create({
   baseURL: API_BASE_URL,

@@ -23,6 +23,10 @@ const tabSchema = new mongoose.Schema({
     required: true,
   },
   items: [taskSchema],
+  version: {
+    type: Number,
+    default: 0,
+  },
 }, {
   timestamps: true,
 });

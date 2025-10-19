@@ -144,17 +144,34 @@ const store = createStore({
     },
 
     // Update task
-    async updateTask({ commit }, payload) {
+    async updateTask({ commit, state }, payload) {
       try {
         commit('setLoading', true);
         commit('setError', null);
         
         const [taskData, tabId] = payload;
-        await taskService.updateTask(tabId, taskData._id, taskData);
-        commit('updateTask', payload);
+        
+        // Get current tab version
+        const currentTab = state.tabs.find(tab => tab._id === tabId);
+        if (!currentTab) {
+          throw new Error('Tab not found');
+        }
+        
+        // Include version in request
+        const taskDataWithVersion = { ...taskData, version: currentTab.version };
+        const updatedTask = await taskService.updateTask(tabId, taskData._id, taskDataWithVersion);
+        
+        // Update local state with new version
+        commit('updateTask', [updatedTask, tabId]);
       } catch (error) {
         console.error('Error updating task:', error);
-        commit('setError', error.message);
+        if (error.response?.status === 409) {
+          // Version conflict - refresh data
+          commit('setError', 'Data was updated by another user. Refreshing...');
+          await dispatch('refreshTabs');
+        } else {
+          commit('setError', error.message);
+        }
       } finally {
         commit('setLoading', false);
       }

@@ -24,9 +24,21 @@ router.post('/:tabId/tasks', async (req, res) => {
 // Update task in tab
 router.put('/:tabId/tasks/:taskId', async (req, res) => {
   try {
+    const { version } = req.body;
+    
+    // Find tab with version check
     const tab = await Tab.findById(req.params.tabId);
     if (!tab) {
       return res.status(404).json({ error: 'Tab not found' });
+    }
+
+    // Version conflict check
+    if (version !== undefined && tab.version !== version) {
+      return res.status(409).json({ 
+        error: 'Version conflict. Please refresh and try again.',
+        currentVersion: tab.version,
+        expectedVersion: version
+      });
     }
 
     const task = tab.items.id(req.params.taskId);
@@ -35,9 +47,10 @@ router.put('/:tabId/tasks/:taskId', async (req, res) => {
     }
 
     Object.assign(task, req.body);
+    tab.version += 1; // Increment version
     await tab.save();
     
-    res.json(task);
+    res.json({ ...task.toObject(), version: tab.version });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
